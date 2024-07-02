@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "mocha './tests/*Test.js' || exit 0",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -42,6 +43,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
@@ -50,9 +53,11 @@
     "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "autoprefixer": "^10.4.19",
+    "chai": "^5.1.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "mocha": "^10.5.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
