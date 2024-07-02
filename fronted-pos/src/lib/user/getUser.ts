@@ -1,8 +1,7 @@
 import supabase from '@/lib/supabase';
 import { MemberData } from '@/types/members';
-import { type User } from '@/types/user';
 
-export interface UserData extends Omit<User, 'id'> {
+export interface UserData extends Omit<MemberData, 'id'> {
 	id: number;
 }
 
@@ -47,7 +46,15 @@ export const getCountUsers = async (): Promise<number> => {
 	try {
 		const { count, error } = await supabase
 			.from('member')
-			.select('*', { count: 'exact', head: true });
+			.select(`
+                id,
+                name,
+                lastname,
+                member_role!inner (
+                    role,
+                    status
+                )
+            `, { count: 'exact', head: true });
 
 		if (error) throw new Error(error.message);
 
@@ -56,4 +63,14 @@ export const getCountUsers = async (): Promise<number> => {
 		console.error('Error fetching user count:', error);
 		return 0;
 	}
+};
+
+export const getUserById = async ({ id,timeout }: { id: string , timeout: (milliseconds: number) => AbortSignal}) => {
+	const { data: menber } = await supabase
+	.from('member')
+	.select(`id,name,lastname,member_role!inner (role,status)`)
+	.eq('id', id)
+	.abortSignal(timeout(3000));
+	
+	return menber?.[0] as unknown as UserData;
 };

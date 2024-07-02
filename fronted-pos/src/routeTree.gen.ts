@@ -419,3 +419,130 @@ export const routeTree = rootRoute.addChildren({
 })
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/_auth",
+        "/_authenticated"
+      ]
+    },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/sign-in",
+        "/_auth/sign-up"
+      ]
+    },
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/settings",
+        "/_authenticated/",
+        "/_authenticated/clients",
+        "/_authenticated/products",
+        "/_authenticated/sales",
+        "/_authenticated/users"
+      ]
+    },
+    "/_auth/sign-in": {
+      "filePath": "_auth/sign-in.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/sign-up": {
+      "filePath": "_auth/sign-up.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_authenticated/settings": {
+      "filePath": "_authenticated/settings.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/": {
+      "filePath": "_authenticated/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/clients": {
+      "filePath": "_authenticated/(clients)/clients.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/clients/$id",
+        "/_authenticated/clients/add",
+        "/_authenticated/clients/"
+      ]
+    },
+    "/_authenticated/products": {
+      "filePath": "_authenticated/(products)/products.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/products/$id",
+        "/_authenticated/products/add",
+        "/_authenticated/products/"
+      ]
+    },
+    "/_authenticated/sales": {
+      "filePath": "_authenticated/(sales)/sales.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/sales/add",
+        "/_authenticated/sales/"
+      ]
+    },
+    "/_authenticated/users": {
+      "filePath": "_authenticated/(users)/users.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/users/$id",
+        "/_authenticated/users/add",
+        "/_authenticated/users/"
+      ]
+    },
+    "/_authenticated/clients/$id": {
+      "filePath": "_authenticated/(clients)/clients.$id.lazy.tsx",
+      "parent": "/_authenticated/clients"
+    },
+    "/_authenticated/clients/add": {
+      "filePath": "_authenticated/(clients)/clients.add.lazy.tsx",
+      "parent": "/_authenticated/clients"
+    },
+    "/_authenticated/products/$id": {
+      "filePath": "_authenticated/(products)/products.$id.lazy.tsx",
+      "parent": "/_authenticated/products"
+    },
+    "/_authenticated/products/add": {
+      "filePath": "_authenticated/(products)/products.add.lazy.tsx",
+      "parent": "/_authenticated/products"
+    },
+    "/_authenticated/sales/add": {
+      "filePath": "_authenticated/(sales)/sales.add.lazy.tsx",
+      "parent": "/_authenticated/sales"
+    },
+    "/_authenticated/users/$id": {
+      "filePath": "_authenticated/(users)/users.$id.lazy.tsx",
+      "parent": "/_authenticated/users"
+    },
+    "/_authenticated/users/add": {
+      "filePath": "_authenticated/(users)/users.add.lazy.tsx",
+      "parent": "/_authenticated/users"
+    },
+    "/_authenticated/clients/": {
+      "filePath": "_authenticated/(clients)/clients.index.lazy.tsx",
+      "parent": "/_authenticated/clients"
+    },
+    "/_authenticated/products/": {
+      "filePath": "_authenticated/(products)/products.index.lazy.tsx",
+      "parent": "/_authenticated/products"
+    },
+    "/_authenticated/sales/": {
+      "filePath": "_authenticated/(sales)/sales.index.lazy.tsx",
+      "parent": "/_authenticated/sales"
+    },
+    "/_authenticated/users/": {
+      "filePath": "_authenticated/(users)/users.index.lazy.tsx",
+      "parent": "/_authenticated/users"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

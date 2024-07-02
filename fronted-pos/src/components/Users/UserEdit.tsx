@@ -1,7 +1,9 @@
-import React from 'react';
+
+import { getRouteApi, useNavigate } from '@tanstack/react-router';
+import { useQuery } from '@/hooks/useQuery';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ProfileSchema, ProfilechemaValidator } from '@/lib/validation/validation';
+import { SignOutSchema, SignOutSchemaValidator } from '@/lib/validation/validation';
 import { MemberRole } from '@/types/members';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,6 +13,12 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import StepsList from './UserEdit/StepList';
 import UserEditHeader from './UserEdit/UserEditHeader';
+import type { UsersPagination } from '@/routes/_authenticated/(users)/users';
+import { updateUser } from '@/lib/user/updateUser';
+
+import { getUserById, UserData } from '@/lib/user/getUser';
+const route = getRouteApi('/_authenticated/users/$id');
+
 
 const UserEdit = () => {
   const {
@@ -18,31 +26,33 @@ const UserEdit = () => {
     register,
     control,
     formState: { errors },
-  } = useForm<ProfilechemaValidator>({
-    resolver: zodResolver(ProfileSchema),
+  } = useForm<SignOutSchemaValidator>({
+    resolver: zodResolver(SignOutSchema),
   });
 
-  const onSubmit = async (data: ProfilechemaValidator) => {
+  const loaderData = route.useParams();
+  const navigate = useNavigate({ from: '/users' });
+
+  const { data: member } = useQuery<SignOutSchemaValidator>({
+		fetchFunction: getUserById,
+		params: { id: loaderData.id }
+	});
+
+
+  const onSubmit = async () => {
     try {
-      console.log(data); // Verificar los datos enviados
-      // Lógica para editar el usuario
-      // Supongamos que estamos usando una llamada API ficticia
-      const response = await fetch('/api/edit-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al guardar los datos');
-      }
-
-      toast.success('Usuario editado con éxito');
-    } catch (error) {
-      console.error(error);
-      toast.error('Error inesperado', { duration: 2000, description: 'Ocurrió un error inesperado al editar el usuario.' });
+      if (member === null) return;
+			await updateUser(member);
+			toast.success('El usuario se ha modificado con éxito');
+			return navigate({
+				to: '/users',
+				search: (searchParams) => {
+					const prevSearchParams = searchParams as UsersPagination;
+					return { ...prevSearchParams };
+				}
+			});
+		} catch (error) {
+			console.log(error);
     }
   };
 
@@ -67,6 +77,8 @@ const UserEdit = () => {
                       placeholder="Nombre"
                       {...register('name')}
                       className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-opacity-50"
+                      defaultValue={member?.name ?? ''}
+                      
                     />
                     {errors.name && <span className="text-sm text-red-600">{errors.name?.message}</span>}
                   </div>
@@ -78,6 +90,7 @@ const UserEdit = () => {
                       placeholder="Apellido"
                       {...register('lastname')}
                       className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-opacity-50"
+                      defaultValue={member?.lastname ?? ''}
                     />
                     {errors.lastname && <span className="text-sm text-red-600">{errors.lastname?.message}</span>}
                   </div>
@@ -87,7 +100,7 @@ const UserEdit = () => {
                       <Controller
                         name="role"
                         control={control}
-                        defaultValue={MemberRole.MEMBER}
+                        defaultValue={member?.role ?? 'MEMBER'}
                         render={({ field }) => (
                           <Select
                             {...field}
@@ -106,10 +119,15 @@ const UserEdit = () => {
                         )}
                       />
                       {errors.role && <span className="text-sm text-red-600">{errors.role?.message}</span>}
-                    </div>
+                    </div>                    
                   </div>
                   <div className="md:col-span-2 flex justify-end space-x-4">
-                    <Button type="submit" className="bg-green-600 text-white">Guardar Cambios</Button>
+                    <Button 
+                      type="submit" 
+                      className="bg-green-600 text-white"
+                      onClick={onSubmit}>
+                      Guardar Cambios 
+                      </Button>
                   </div>
                 </form>
               </CardContent>

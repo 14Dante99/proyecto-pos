@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { SignOutSchemaValidator } from '@/lib/validation/validation';
 import { MemberRole } from '@/types/members';
+import { Button } from '@/components/ui/button';
 
 interface UserFormProps {
     onSubmit: () => void;
@@ -31,6 +32,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, register, control, errors
                             placeholder="Nombre"
                             {...register('name')}
                             className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-opacity-50"
+                            defaultValue={client?.customer?.first_name ?? ''}
                         />
                         {errors.name && <span className="text-sm text-red-600">{errors.name?.message}</span>}
                     </div>
@@ -42,6 +44,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, register, control, errors
                             placeholder="Apellido"
                             {...register('lastname')}
                             className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-opacity-50"
+                            defaultValue={client?.customer?.first_name ?? ''}
                         />
                         {errors.lastname && <span className="text-sm text-red-600">{errors.lastname?.message}</span>}
                     </div>
@@ -97,7 +100,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, register, control, errors
                         </div>
                     </div>
                     <div className="md:col-span-2 flex justify-end space-x-4">
-                        <Button type="submit" className="bg-green-600 text-white">Guardar Cambios</Button>
+                        <Button type="submit" className="bg-green-600 text-white">Guardar Cambi</Button>
                     </div>
                 </form>
             </CardContent>
